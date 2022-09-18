@@ -51,7 +51,21 @@ class Tree {
     /** numGreater(lowerBound): return a count of the number of nodes
     * whose value is greater than lowerBound. */
     numGreater(lowerBound) {
+        let count = 0;
+        let toVisitStack = [this.root];
+        
+        if(toVisitStack[0] !== null){
+            while(toVisitStack.length){
+                let current = toVisitStack.pop();
 
+                if (current.val > lowerBound) count++;
+                
+                for(let child of current.children){
+                    toVisitStack.push(child);
+                }
+            }
+        }
+        return count;
     }
 }
 
