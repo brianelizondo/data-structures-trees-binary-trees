@@ -62,7 +62,22 @@ class BinaryTree {
     /** nextLarger(lowerBound): return the smallest value in the tree
     * which is larger than lowerBound. Return null if no such value exists. */
     nextLarger(lowerBound) {
+        if (!this.root) return null;
+        let nextLargerNumber = null;
+        let toVisitStack = [this.root];
+        
+        while(toVisitStack.length){
+            let currentNode = toVisitStack.pop();
 
+            if(currentNode.val > lowerBound){
+                nextLargerNumber = nextLargerNumber === null ? currentNode.val : nextLargerNumber;
+                nextLargerNumber = currentNode.val < nextLargerNumber ? currentNode.val : nextLargerNumber;
+            }
+            
+            if(currentNode.left !== null) toVisitStack.push(currentNode.left);
+            if(currentNode.right !== null) toVisitStack.push(currentNode.right);
+        }
+        return nextLargerNumber;
     }
 
     /** Further study!
