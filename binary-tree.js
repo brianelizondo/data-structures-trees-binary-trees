@@ -43,15 +43,24 @@ class BinaryTree {
     }
 
     /** maxSum(): return the maximum sum you can obtain by traveling along a path in the tree.
-     * The path doesn't need to start at the root, but you can't visit a node more than once. */
+    * The path doesn't need to start at the root, but you can't visit a node more than once. */
+    maxSum(){
+        let maxSum = 0;
 
-    maxSum() {
-
+        function checkMaxSum(node){
+            if(node === null) return 0;
+            let leftBranch = checkMaxSum(node.left);
+            let rightBranch = checkMaxSum(node.right);
+            maxSum = Math.max(maxSum, node.val + leftBranch + rightBranch);
+            
+            return Math.max(0, node.val + leftBranch, node.val + rightBranch);
+        }
+        checkMaxSum(this.root);
+        return maxSum;
     }
 
     /** nextLarger(lowerBound): return the smallest value in the tree
-     * which is larger than lowerBound. Return null if no such value exists. */
-
+    * which is larger than lowerBound. Return null if no such value exists. */
     nextLarger(lowerBound) {
 
     }
