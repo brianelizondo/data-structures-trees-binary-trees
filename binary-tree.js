@@ -81,11 +81,31 @@ class BinaryTree {
     }
 
     /** Further study!
-     * areCousins(node1, node2): determine whether two nodes are cousins
-     * (i.e. are at the same level but have different parents. ) */
+    * areCousins(node1, node2): determine whether two nodes are cousins
+    * (i.e. are at the same level but have different parents. ) */
+    areCousins(node1, node2){
+        const root = this.root;
+        if(node1 === root || node2 === root) return false;
 
-    areCousins(node1, node2) {
+        function findNode(currentNode, nodeFind, findIt=false, currLevel=0, nodeFindResult={level: 0, parent:null}){            
+            if(findIt) return nodeFindResult;
+            if(currentNode.left === nodeFind || currentNode.right === nodeFind){
+                findIt = true;
+                nodeFindResult.level = currLevel + 1;
+                nodeFindResult.parent = currentNode;
+            }
+            
+            if(currentNode.left) findNode(currentNode.left, nodeFind, findIt, currLevel + 1, nodeFindResult);
+            if(currentNode.right) findNode(currentNode.right, nodeFind, findIt, currLevel + 1, nodeFindResult);
 
+            return nodeFindResult;
+        }
+
+        let node1Result = findNode(this.root, node1);
+        let node2Result = findNode(this.root, node2);
+        let cousinsNodes = node1Result.level === node2Result.level && node1Result.parent !== node2Result.parent ? true : false;
+        
+        return cousinsNodes;
     }
 
     /** Further study!
