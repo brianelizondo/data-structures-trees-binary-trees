@@ -109,17 +109,43 @@ class BinaryTree {
     }
 
     /** Further study!
-     * serialize(tree): serialize the BinaryTree object tree into a string. */
+    * serialize(tree): serialize the BinaryTree object tree into a string. */
+    static serialize(tree){
+        let treeValues = [];
 
-    static serialize() {
+        function traverseNodes(currentNode){
+            if(currentNode){
+                treeValues.push(currentNode.val);
+                traverseNodes(currentNode.left);
+                traverseNodes(currentNode.right);
+            }else{
+                treeValues.push("*");
+            }
+        }
 
+        traverseNodes(tree.root);
+        return treeValues.join("-");
     }
 
     /** Further study!
-     * deserialize(stringTree): deserialize stringTree into a BinaryTree object. */
+    * deserialize(stringTree): deserialize stringTree into a BinaryTree object. */
+    static deserialize(string) {
+        const treeArr = string.split("-");
 
-    static deserialize() {
+        function rebuildTree(){
+            if(treeArr.length > 0){
+                let nodeVal = treeArr.shift();
+                if(nodeVal === "*") return null;
 
+                let newNode = new BinaryTreeNode(parseInt(nodeVal));
+                newNode.left = rebuildTree();
+                newNode.right = rebuildTree();
+
+                return newNode;
+            }
+        }
+
+        return new BinaryTree(rebuildTree());
     }
 
     /** Further study!
